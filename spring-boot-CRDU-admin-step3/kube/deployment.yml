@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: step3-controller
+    visualize: "true"
+  name: step3-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: step3
+        app: step3
+        visualize: "true"
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: spring.boot.config
+            items:
+              - key: application.properties
+                path: application.properties
+      containers:
+      - name: step3
+        image: step3:latest
+        ports:
+          - containerPort: 8090
+        volumeMounts:
+            - name: config
+              mountPath: /usr/src/app/config

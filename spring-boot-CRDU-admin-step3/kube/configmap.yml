@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring.boot.config
+data:
+  application.properties: |
+    mongo.database=test
+    mongo.database.url=mongodb://mongo
+    server.port = 8090
