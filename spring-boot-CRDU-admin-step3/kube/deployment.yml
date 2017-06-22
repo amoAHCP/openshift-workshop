@@ -24,6 +24,7 @@ spec:
       containers:
       - name: step3
         image: step3:latest
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8090
         volumeMounts:
