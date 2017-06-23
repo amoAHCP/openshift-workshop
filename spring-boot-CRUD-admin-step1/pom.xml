@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ch.trivadis.com</groupId>
-	<artifactId>spring-boot-CRDU-admin-step3</artifactId>
+	<artifactId>spring-boot-CRUD-admin-step1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>spring-boot-CRDU-admin - step 3 -</name>
+	<name>spring-boot-CRUD-admin - step 1 -</name>
 	<description>Trivadis/RedHat Openshift workshop example application</description>
 
 	<parent>
