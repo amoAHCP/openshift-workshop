@@ -1,0 +1,7 @@
+metadata:
+  name: bootadminstep4
+data:
+  application.properties: |
+    mongo.database=test
+    mongo.database.url=mongodb://mongo
+    server.port = 8090
