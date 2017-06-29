@@ -1,0 +1,12 @@
+kind: Service
+metadata:
+  labels:
+    name: mongo
+    visualize: "false"
+  name: mongo
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo
