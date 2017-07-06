@@ -1,16 +1,12 @@
 # Trivadis/RedHat Openshift Workshop - Part 3
 
-A simple Spring-boot 2 CRUD application.
+A simple Spring-boot 2 CRUD application with mongoDB. In Step 4 the application will be deployed to openshift, by the help of the fabric8-maven-plugin.
 
 ## Run the application
 
-
-1. start a mongodb : kubectl create -f kube/mongo-service.yaml && kubectl create -f kube/mongo-controller.yaml
-2. deploy config map: kubectl create -f kube/configmap.yaml
-3. mvn clean package 
-
-Optional: define own Dockerfile: https://maven.fabric8.io/#external-dockerfile
-4. docker build -t step3 . 
-5. create service: kubectl create -f kube/service.yaml
-6. create deployment: kubectl create -f kube/deployment.yaml
-7. verify service: minikube service list (grep the URL of the step3 service and open in browser --> ${URL}/index.html)
+1. oc login -u developer -p developer
+2. minishift docker-env
+3. start a mongodb : oc create -f kube/mongoservice.yml && oc create -f kube/mongodeployment.yml
+4. mvn clean install fabric8:deploy 
+5. get service URL minishift openshift service list -n myproject
+6. verify service: curl $URL/index.html

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: spring.boot.config
+  name: bootadminstep3
 data:
   application.properties: |
     mongo.database=test

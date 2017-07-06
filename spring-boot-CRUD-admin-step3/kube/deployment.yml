@@ -2,9 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    name: step3-controller
+    name: step3controller
     visualize: "true"
-  name: step3-controller
+  name: step3controller
 spec:
   replicas: 1
   template:
@@ -17,13 +17,13 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: spring.boot.config
+            name: bootadminstep3
             items:
               - key: application.properties
                 path: application.properties
       containers:
       - name: step3
-        image: step3:latest
+        image: 172.30.1.1:5000/myproject/step3:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8090
