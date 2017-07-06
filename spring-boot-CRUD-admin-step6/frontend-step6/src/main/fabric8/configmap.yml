@@ -1,0 +1,9 @@
+metadata:
+  name: frontendstep6
+data:
+  application.properties: |
+    read.service=READ_STEP6_SERVICE_HOST
+    read.service.port=READ_STEP6_SERVICE_PORT_HTTP
+    write.service=WRITE_STEP6_SERVICE_HOST
+    write.service.port=WRITE_STEP6_SERVICE_PORT_HTTP
+    server.port = 8090

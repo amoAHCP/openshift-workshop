@@ -1,0 +1,7 @@
+metadata:
+  name: writestep6
+data:
+  application.properties: |
+    mongo.database=test
+    mongo.database.url=mongodb://mongo
+    server.port = 8090
