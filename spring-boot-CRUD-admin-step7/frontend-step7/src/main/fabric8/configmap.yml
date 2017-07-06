@@ -1,0 +1,9 @@
+metadata:
+  name: frontendstep7
+data:
+  application.properties: |
+    read.service=read-step7
+    read.service.port=80
+    write.service=write-step7
+    write.service.port=80
+    server.port = 8090
