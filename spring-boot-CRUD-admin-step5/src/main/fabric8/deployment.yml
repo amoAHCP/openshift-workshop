@@ -1,0 +1,18 @@
+metadata:
+  annotations:
+    configmap.fabric8.io/update-on-change: bootadminstep5
+spec:
+  replicas: 1
+  template:
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: bootadminstep5
+            items:
+            - key: application.properties
+              path: application.properties
+      containers:
+        - volumeMounts:
+            - name: config
+              mountPath: /usr/src/app/config

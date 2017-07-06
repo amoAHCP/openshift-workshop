@@ -1,6 +1,7 @@
-# Trivadis/RedHat Openshift Workshop - Part 3
+# Trivadis/RedHat Openshift Workshop - Part 4
 
-A simple Spring-boot 2 CRUD application with mongoDB. In Step 4 the application will be deployed to openshift, by the help of the fabric8-maven-plugin.
+A simple Spring-boot 2 CRUD application with mongoDB. In Step 4 the application will be deployed to openshift, by the help of the fabric8-maven-plugin using custom service/deployment descriptors
+You can place your custom configuration in src/main/fabric8
 
 ## Run the application
 

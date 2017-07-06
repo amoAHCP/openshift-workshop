@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: mongo
+    visualize: "false"
+  name: mongo-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo
+        visualize: "true"
+    spec:
+      volumes:
+      - name: mongodb-volume
+        emptyDir: {}
+      containers:
+      - image: mongo
+        name: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+        resources: {}
+        volumeMounts:
+         - name: mongodb-volume
+           mountPath: /data/db
+           readOnly: false
