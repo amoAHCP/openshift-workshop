@@ -31,13 +31,12 @@ public class FrontendApplication {
   }
 
 
-
   @Bean
   CommandLineRunner initData(ReactiveUserRepository personRepository) {
     Flux<Person> people = Flux.just(
-        new Person("1", "Eric", "Foo","Zh"),
-        new Person("2", "Raymond", "Bar","B"),
-        new Person("3", "Paul", "Baz","x")
+        new Person("1", "Eric", "Foo", "Zh"),
+        new Person("2", "Raymond", "Bar", "B"),
+        new Person("3", "Paul", "Baz", "x")
     );
 
     return args -> {

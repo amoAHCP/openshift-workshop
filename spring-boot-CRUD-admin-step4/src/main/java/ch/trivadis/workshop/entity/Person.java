@@ -5,7 +5,7 @@ package ch.trivadis.workshop.entity;
  */
 
 /**
- * @author Sebastien Deleuze
+ * @author Andy Moncsek
  */
 public class Person {
 
@@ -20,7 +20,6 @@ public class Person {
 
   public Person() {
   }
-
 
 
   public Person(String id, String firstname, String lastname, String address) {

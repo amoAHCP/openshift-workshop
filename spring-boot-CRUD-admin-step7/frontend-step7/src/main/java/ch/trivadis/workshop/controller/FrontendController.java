@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 
 
 /**
- * Created by amo on 04.04.17.
+ * Created by Andy Moncsek on 04.04.17.
  */
 @RestController
 @RequestMapping("/api")
@@ -43,7 +43,7 @@ public class FrontendController {
   @GetMapping(path = "/users/{id}")
   public Mono<Person> get(@PathVariable("id") String uuid) {
     return this.client
-        .get().uri(getReadURL() + "/api/users/{id}", uuid)
+        .get().uri(getReadURL() + "/api/users/", uuid)
         .accept(MediaType.APPLICATION_JSON)
         .exchange()
         .flatMap(resp -> resp.bodyToMono(Person.class));
@@ -91,13 +91,13 @@ public class FrontendController {
    * Returns the URL for the "read" application using environmental variables
    */
   private String getReadURL() {
-    return "http://" + readHost+":"+readPort;
+    return "http://" + readHost + ":" + readPort;
   }
 
   /**
    * Returns the URL for the "write" application using environmental variables
    */
   private String getWriteURL() {
-    return "http://" + writeHost+":"+writePort;
+    return "http://" + writeHost + ":" + writePort;
   }
 }

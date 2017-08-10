@@ -2,7 +2,6 @@ package ch.trivadis.workshop.controller;
 
 import ch.trivadis.workshop.entity.Person;
 import ch.trivadis.workshop.repository.ReactiveUserRepository;
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,7 @@ import reactor.core.publisher.Mono;
 
 
 /**
- * Created by amo on 04.04.17.
+ * Created by Andy Moncsek on 04.04.17.
  */
 @RestController
 @RequestMapping("/api")

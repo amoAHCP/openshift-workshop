@@ -7,5 +7,5 @@ A simple Spring-boot 2 CRUD application with mongoDB. In Step 6 we separate the 
 2. minishift docker-env
 3. start a mongodb : oc create -f kube/mongoservice.yml && oc create -f kube/mongodeployment.yml
 4. mvn clean install 
-5. get service URL minishift openshift service list -n myproject --> find the frontend service url
+5. get service URL: minishift openshift service list -n myproject --> find the frontend service url
 6. verify service: curl $URL/index.html

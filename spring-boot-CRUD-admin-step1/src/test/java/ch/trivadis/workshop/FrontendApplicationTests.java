@@ -14,13 +14,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class FrontendApplicationTests {
 
 
-	@Autowired
-	WebClient client;
+  @Autowired
+  WebClient client;
 
 
-	@Test
-	public void contextLoads() {
-		assertNotNull(client);
-	}
+  @Test
+  public void contextLoads() {
+    assertNotNull(client);
+  }
 
 }
