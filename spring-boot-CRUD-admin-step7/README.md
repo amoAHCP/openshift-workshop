@@ -6,9 +6,9 @@ A simple Spring-boot 2 CRUD application with mongoDB. In Step 7 we add a second 
 1. oc login -u developer -p developer
 2. minishift docker-env
 3. create mongodb service: oc create -f kube/mongoservice.yml 
-3.1 start a mongodb  oc create -f kube/mongodeployment.yml
-4. grant rights: oadm policy add-role-to-user view system:serviceaccount:myproject:default -n myproject
-5. mvn clean install 
-6. get service URL minishift openshift service list -n myproject --> find both frontend service urls
-7. verify frontend: curl $ROUTE-URL/index.html
-8. verify wildfly-frontend: curl $ROUTE-URL/index.html (supports only read operations)
+4 start a mongodb  oc create -f kube/mongodeployment.yml
+5. grant rights: oadm policy add-role-to-user view system:serviceaccount:myproject:default -n myproject
+6. mvn clean install 
+7. get service URL minishift openshift service list -n myproject --> find both frontend service urls
+8. verify frontend: curl $ROUTE-URL/index.html
+9. verify wildfly-frontend: curl $ROUTE-URL/index.html (supports only read operations)

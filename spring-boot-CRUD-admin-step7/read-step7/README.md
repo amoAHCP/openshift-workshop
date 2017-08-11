@@ -1,2 +1,4 @@
-# Trivadis/RedHat Openshift Workshop - Part 6
+# Trivadis/RedHat Openshift Workshop - Part 7
+
+The Spring Boot *read* backend
 
