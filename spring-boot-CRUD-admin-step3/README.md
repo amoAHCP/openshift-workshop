@@ -9,7 +9,7 @@ A simple Spring-boot 2 CRUD application with mongoDB. Application will be build 
 3. eval $(minishift docker-env) --> on Windows *minishift docker-env*
 4. docker login -u developer -p $(oc whoami -t) $(minishift openshift registry) **on Windows:** evaluate the expression *oc whoami -t* & *minishift openshift registry* and replace them in the command  
 5. create mongodb service: oc create -f kube/mongoservice.yml 
-6 start a mongodb  oc create -f kube/mongodeployment.yml
+6. start a mongodb  oc create -f kube/mongodeployment.yml
 7. deploy config map: oc create -f kube/configmap.yml
 8. create service: oc create -f kube/service.yml
 9. mvn clean package 
