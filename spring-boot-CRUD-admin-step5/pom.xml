@@ -85,11 +85,10 @@
               <alias>step5</alias>
               <build>
                 <assembly>
+                  <!-- the default path where the build process holds the source -->
                   <basedir>/deployments</basedir>
                   <descriptorRef>artifact-with-dependencies</descriptorRef>
                 </assembly>
-
-                <!--<buildStrategy>docker</buildStrategy>-->
                 <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
 
               </build>

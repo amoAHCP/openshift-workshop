@@ -5,9 +5,9 @@ You can place your custom configuration in src/main/fabric8 & your Dockerfile in
 ## Run the application
 
 1. oc login -u developer -p developer
-2. minishift docker-env
+2. eval $(minishift docker-env)
 3. create mongodb service: oc create -f kube/mongoservice.yml 
-4 start a mongodb  oc create -f kube/mongodeployment.yml
+4. start a mongodb: oc create -f kube/mongodeployment.yml
 5. mvn clean install fabric8:deploy
 6. get service $ROUTE-URL: minishift openshift service list -n myproject
 7. verify service: curl $ROUTE-URL/index.html
