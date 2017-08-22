@@ -1,11 +1,13 @@
 # Trivadis/RedHat Openshift Workshop - Part 9
 
+## Working with config maps in different environments
+
 A simple nodejs application showing how to define and use a config map. Every project/environment will have their own values.
 
 There will be 2 users of 2 projects for two different staging environments:
 
-- User:*dev*  Project:*configmap-dev*
-- User:*test* Project:*configmap-test*
+- User: *dev*  Project: *configmap-dev*
+- User: *test* Project: *configmap-test*
 
 ## Run the examples
 
