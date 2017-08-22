@@ -1,4 +1,4 @@
-# Trivadis/RedHat Openshift Workshop - Part 10
+# Trivadis/RedHat Openshift Workshop - Part 11
 
 ## Openshift Templates
 
