@@ -1,0 +1,250 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "elasticsearch",
+    "annotations": {
+      "openshift.io/display-name": "Elasticsearch (Ephemeral)",
+      "description": "Elasticsearch server without persistent storage. Any unreplicated data stored will be lost upon pod destruction.",
+      "iconClass": "icon-elasticsearch",
+      "tags": "database,elasticsearch",
+      "template.openshift.io/long-description": "This template provides a standalone Elasticsearch server. The data is not stored on persistent storage, so any restart of the service will result in all unreplicated data being lost.",
+      "template.openshift.io/provider-display-name": "Trivadis AG",
+      "template.openshift.io/documentation-url": "https://github.com/amoAHCP/openshift-workshop/templates",
+      "template.openshift.io/support-url": "https://www.trivadis.com"
+    }
+  },
+  "message": "The following service(s) have been created in your project: ${DATABASE_SERVICE_NAME}.\n\n       Password: ${ES_PASSWORD}\n Connection URL: http://${DATABASE_SERVICE_NAME}:6200/\n\nFor more information about using this template, see https://github.com/amoAHCP/openshift-workshop/templates.",
+  "labels": {
+    "template": "elasticsearch-template"
+  },
+  "objects": [
+    {
+      "kind": "Secret",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${DATABASE_SERVICE_NAME}",
+        "annotations": {
+          "template.openshift.io/expose-password": "{.data['database-password']}"
+        }
+      },
+      "stringData" : {
+        "database-password" : "${ES_PASSWORD}"
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${DATABASE_SERVICE_NAME}",
+        "creationTimestamp": null,
+        "annotations": {
+          "template.openshift.io/expose-uri": "http://{.spec.clusterIP}:{.spec.ports[?(.name==\"elasticsearch\")].port}"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "elasticsearch",
+            "protocol": "TCP",
+            "port": 9200,
+            "targetPort": 9200,
+            "nodePort": 0
+          },{
+            "name": "elasticsearch-cluster",
+            "protocol": "TCP",
+            "port": 9300,
+            "targetPort": 9300,
+            "nodePort": 0
+          }
+        ],
+        "selector": {
+          "name": "${DATABASE_SERVICE_NAME}"
+        },
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata":{
+        "name": "elasticsearch",
+        "annotations":{
+          "openshift.io/image.insecureRepository": "true"
+        }
+      },
+      "spec":{
+        "dockerImageRepository": "dockerhub.com:5000/elasticsearch"
+      }
+    },
+    {
+      "kind": "DeploymentConfig",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${DATABASE_SERVICE_NAME}",
+        "creationTimestamp": null
+      },
+      "spec": {
+        "strategy": {
+          "type": "Recreate"
+        },
+        "triggers": [
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "elasticsearch"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "name": "elasticsearch:${ES_VERSION}",
+                "namespace": "${NAMESPACE}"
+              },
+              "lastTriggeredImage": ""
+            }
+          },
+          {
+            "type": "ConfigChange"
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "name": "${DATABASE_SERVICE_NAME}"
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "name": "${DATABASE_SERVICE_NAME}"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "elasticsearch",
+                "image": " ",
+                "ports": [
+                  {
+                    "containerPort": 9200,
+                    "protocol": "TCP"
+                  },{
+                    "containerPort": 9300,
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "timeoutSeconds": 1,
+                  "initialDelaySeconds": 5,
+                  "httpGet":{
+                    "path": "/_cat/health",
+                    "port": 9200
+                  }
+                },
+                "livenessProbe": {
+                  "timeoutSeconds": 1,
+                  "initialDelaySeconds": 30,
+                  "tcpSocket": {
+                    "port": 9200
+                  }
+                },
+                "env": [
+
+                  {
+                    "name": "ES_JAVA_OPTS",
+                    "value": "-Xms${MEMORY_LIMIT}m -Xmx${MEMORY_LIMIT}m -Dcluster.name=${ES_CLUSTER_NAME}"
+                  },{
+                    "name": "ES_PASSWORD",
+                    "valueFrom": {
+                      "secretKeyRef" : {
+                        "name" : "${DATABASE_SERVICE_NAME}",
+                        "key" : "database-password"
+                      }
+                    }
+                  }
+                ],
+                "resources": {
+                  "limits": {
+                    "memory": "${MEMORY_LIMIT}Mi"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "${DATABASE_SERVICE_NAME}-data",
+                    "mountPath": "/usr/share/elasticsearch/data"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "imagePullPolicy": "IfNotPresent",
+                "capabilities": {},
+                "securityContext": {
+                  "capabilities": {},
+                  "privileged": false
+                }
+              }
+            ],
+            "volumes": [
+              {
+                "name": "${DATABASE_SERVICE_NAME}-data",
+                "emptyDir": {
+                  "medium": ""
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "dnsPolicy": "ClusterFirst"
+          }
+        }
+      },
+      "status": {}
+    }
+  ],
+  "parameters": [
+    {
+      "name": "MEMORY_LIMIT",
+      "displayName": "Memory Limit (MB)",
+      "description": "Maximum amount of memory the container can use.",
+      "value": "512",
+      "required": true
+    },
+    {
+      "name": "NAMESPACE",
+      "displayName": "Namespace",
+      "description": "The OpenShift Namespace where the ImageStream resides.",
+      "value": "openshift"
+    },
+    {
+      "name": "DATABASE_SERVICE_NAME",
+      "displayName": "Database Service Name",
+      "description": "The name of the OpenShift Service exposed for the database.",
+      "value": "elasticsearch",
+      "required": true
+    },
+    {
+      "name": "ES_PASSWORD",
+      "displayName": "Elasticsearch Connection Password",
+      "description": "Password for the Elasticsearch connection user.",
+      "generate": "expression",
+      "from": "[a-zA-Z0-9]{16}",
+      "required": true
+    },
+    {
+      "name": "ES_VERSION",
+      "displayName": "Version of Elasticsearch Image",
+      "description": "Version of Elasticsearch image to be used (5.5 or latest).",
+      "value": "5.5",
+      "required": true
+    },
+    {
+      "name": "ES_CLUSTER_NAME",
+      "displayName": "Elastic Cluster Name",
+      "description": "Elastic Cluster Name, used for discovery of peer instances.",
+      "value": "default-cluster",
+      "required": true
+    }
+  ]
+}
