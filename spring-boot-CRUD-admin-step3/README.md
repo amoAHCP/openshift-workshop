@@ -4,7 +4,7 @@ A simple Spring-boot 2 CRUD application with mongoDB. Application will be build 
 
 ## Run the application
 
-1. Start minishift (for docker-machine users: *minishift start --vm-driver=virtualbox*)
+1. Start minishift (for docker-machine users: *minishift start --vm-driver=virtualbox*), optionally tweak memory *with --memory 4096* (default is 2048 MB and 2 CPUs).
 2. Login to Openshift: *oc login -u developer -p developer*
 3. Set the local docker environment: *eval $(minishift docker-env)* --> **on Windows** *minishift docker-env*
 4. Login to the docker registry: *docker login -u developer -p $(oc whoami -t) $(minishift openshift registry)* **on Windows:** evaluate the expression *oc whoami -t* & *minishift openshift registry* and replace them in the command  
@@ -20,3 +20,4 @@ A simple Spring-boot 2 CRUD application with mongoDB. Application will be build 
 14. Create deployment: *oc create -f kube/deployment.yml*
 15. get $NODEPORT : *oc export svc step3 | grep nodePort*
 16. Verify service: *curl http://$(minishift ip):$NODEPORT/index.html* or point your browser to http://192.168.99.100:31698/index.html (example)
+
