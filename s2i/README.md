@@ -1,4 +1,4 @@
-# Trivadis/RedHat Openshift Workshop - Part 10
+# Trivadis/RedHat Openshift Workshop - Part 12
 
 In this part we build our own S2I builder image for a static web server based on lighttpd.
 
@@ -13,7 +13,7 @@ In this part we build our own S2I builder image for a static web server based on
 2. Create a new S2I builder skeleton: *s2i create lighttpd-centos7 s2i-lighttpd*
 3. Have a look into the created folder. It should look somehow similar to this:
 
----
+```
 s2i-lighttpd/
   Dockerfile – This is a standard Dockerfile where we’ll define the builder image
   Makefile – a helper script for building and testing the builder image
@@ -25,11 +25,10 @@ s2i-lighttpd/
     run – script responsible for running the application
     save-artifacts – script responsible for incremental builds, covered in a future article
     usage – script responsible for printing the usage of the builder image
----
+```
 
 4. Modify the *Dockerfile* as follows:
-
----
+```bash
 # We are basing our builder image on openshift base-centos7 image
 FROM openshift/base-centos7
 
@@ -71,7 +70,7 @@ EXPOSE 8080
 
 # Set the default CMD to print the usage of the image, if somebody does docker run
 CMD ["usage"]
----
+```
 
 Once the Dockerfile is defined we can now start to fill in the remaining parts of the builder image.
 Let’s deal with S2I scripts. 
@@ -80,7 +79,7 @@ Let’s deal with S2I scripts.
 In our case it’ll just copy the source files into the directory from which they will be served by the 
 Lighttpd server. Edit the *./bin/assemble script* to match the following:
 
----
+```bash
 #!/bin/bash -e
 #
 # S2I assemble script for the 'lighttpd-centos7' image.
@@ -92,14 +91,14 @@ Lighttpd server. Edit the *./bin/assemble script* to match the following:
 
 echo "---> Installing application source"
 cp -Rf /tmp/src/. ./
----
+```
 
 By default the s2i build places the application source in /tmp/src directory. This directory is where the source and other assets will be placed for the build process. You can modify this location by setting the io.openshift.s2i.destination label or passing --destination flag, in which case the sources will be placed in the src subdirectory of the directory you specified. The destination in the above command (./) is using working directory set in the openshift/base-centos7 image, which is set to be /opt/app-root/src.
 
 6. Now it’s time to handle the second required script – *./bin/run*, which is responsible for
    running the application. In our case it’ll just handle starting the Lighttpd server:
 
----
+```bash
 #!/bin/bash -e
 #
 # S2I run script for the 'lighttpd-centos7' image.
@@ -110,14 +109,14 @@ By default the s2i build places the application source in /tmp/src directory. Th
 #
 
 exec lighttpd -D -f /opt/app-root/etc/lighttpd.conf
----
+```
 
 We’re using exec for the above command to replace the run script’s process with the Lighttpd server process. This is done so that all the signals sent by docker will go to Lighttpd process and to have the output (stdout and stderr) of Lighttpd available when running this image.
 
 7. Since we are not covering incremental builds in our example, we can safely **remove the *save-artifacts* script*.
 8. Finally we put some information on how to use our builder image in the usage script:
 
----
+```bash
 #!/bin/bash -e
 
 cat <<EOF
@@ -131,13 +130,13 @@ s2i build https://github.com/soltysh/sti-lighttpd.git --context-dir=test/test-ap
 You can then run the resulting image via:
 docker run -p 8080:8080 sample-app
 EOF
---- 
+```
 
 9. Check the script file permissions; they should all be *755*.
 10. We also need a lighttpd configuration. So create *s2i-lighttpd/etc/lighttpd.conf* with the following
     contents:
 
----
+```bash
 # directory where the documents will be served from
 server.document-root = "/opt/app-root/src"
 
@@ -154,12 +153,12 @@ mimetype.assign = (
   ".jpg" => "image/jpeg",
   ".png" => "image/png"
 )
----
+```
 
 11. Our builder image is ready. We can make sure it’s being built properly by invoking the *make* command
     in the s2i-lighttpd directory which, as you can see from the Makefile, invokes a plain docker build command.
 12. Create *s2i-lighttpd/test/test-app/index.html* with the following contents:
----
+```html
 <!doctype html>
 <html>
   <head>
@@ -168,12 +167,16 @@ mimetype.assign = (
 <body>
   <h1>Hello from lighttpd served index.html!</h1>
 </body>
----
+```
 
 13. With this file in place, we can now do our first S2I build: Let’s invoke the following command from the s2i-lighttpd directory:
-    *s2i build test/test-app/ lighttpd-centos7 sample-app*
+```bash
+s2i build test/test-app/ lighttpd-centos7 sample-app
+```
 14. Now it’s time to actually test the resulting image. Run the image, publishing port 8080 from the container to one on localhost:
-*docker run -p 8080:8080 sample-app*
+```bash
+docker run -p 8080:8080 sample-app
+```
 15. Verify visiting http://localhost:8080/ and see the contents of the *index.html* file there.
 16. Check the file permissions for *test/run*: it should be 700.
 17. Run the S2I test suite with the following command from *thes2i-lighttpd* directory: *make test*

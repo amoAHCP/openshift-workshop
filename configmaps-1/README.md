@@ -13,4 +13,3 @@ A simple nodejs application showing how to define and use a config map.
 6. Get service $ROUTE-URL: *minishift openshift service list -n configmap-1 --> find the frontend service url
 7. verify service: curl $ROUTE-URL
 
-.
