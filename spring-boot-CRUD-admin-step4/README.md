@@ -10,4 +10,4 @@ You can place your custom configuration in src/main/fabric8
 3 start a mongodb  oc create -f kube/mongodeployment.yml
 4. mvn clean install fabric8:deploy 
 5. get service $ROUTE-URL: minishift openshift service list -n myproject
-6. verify service: curl $ROUTE-URL/index.html
+6. verify service: curl $ROUTE-URL/index.html. It should look something like http://spring-boot-crud-admin-step4-myproject.192.168.99.100.nip.io/index.html
