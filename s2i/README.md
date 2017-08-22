@@ -1,4 +1,4 @@
-# Trivadis/RedHat Openshift Workshop - Part 11
+# Trivadis/RedHat Openshift Workshop - Part 12
 
 In this part we build our own S2I builder image for a static web server based on lighttpd.
 
