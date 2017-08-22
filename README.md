@@ -2,7 +2,7 @@
 
 This workshop gives you a brief introduction of how to deploy a Java application step by step to openshift.  
 
-Pre-requirements:
+## Pre-requirements:
 - install Docker (if you run on Windows be aware if you are using docker on Hyper-v or with docker-machine/Virtualbox. Will weii provide some hints for docker-machine useres in the readmes) 
 - powershell if you are running on windows
 - install openshift client tools: https://developers.openshift.com/managing-your-applications/client-tools.html
@@ -13,8 +13,6 @@ Pre-requirements:
   - openshift v3.6.0+
   - kubernetes v1.6.1
   - etcd 3.2.1
-      
-      
     
 -------------------------------
 
@@ -29,3 +27,25 @@ Pre-requirements:
 - In Step 10 we will use secrets to store sensitive data.
 - In Step 11 we will creat and use a template.
 - In Step 12 we will buildour own S2I builder image.
+
+
+## Reset your installation:
+
+Resetting your Openshift is easy. In most cases it is sufficient to run the following commands (ensure you are logged in as developer user, not as admin ;-) ):
+- *oc delete route --all*
+- *oc delete service --all*
+- *oc delete deployment --all*
+- *oc delete pods --all*
+- *oc delete templates --all*
+- *oc delete cm --all*
+
+Dont use *oc delete secrets --all* since you might also delete secrets used by some system components
+in your project.
+
+Given Openshift a few seconds to perform all changes (the CLI will immedeately return, but the deletion process might still be ongoing).
+
+If nevertheless things still fail (rarely happening) you can recreate the Openshift VM completely:
+
+- *minishift delete*
+- *minishift start --memory 4096 --cpus 2*
+
