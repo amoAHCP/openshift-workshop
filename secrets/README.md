@@ -1,4 +1,4 @@
-# Trivadis/RedHat Openshift Workshop - Part 9
+# Trivadis/RedHat Openshift Workshop - Part 10
 
 ## Creating and using secrets
 
