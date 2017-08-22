@@ -28,7 +28,7 @@ s2i-lighttpd/
 ```
 
 4. Modify the *Dockerfile* as follows:
-```
+```bash
 # We are basing our builder image on openshift base-centos7 image
 FROM openshift/base-centos7
 
@@ -136,7 +136,7 @@ EOF
 10. We also need a lighttpd configuration. So create *s2i-lighttpd/etc/lighttpd.conf* with the following
     contents:
 
-```
+```bash
 # directory where the documents will be served from
 server.document-root = "/opt/app-root/src"
 
@@ -171,7 +171,7 @@ mimetype.assign = (
 
 13. With this file in place, we can now do our first S2I build: Let’s invoke the following command from the s2i-lighttpd directory:
 ```bash
-    *s2i build test/test-app/ lighttpd-centos7 sample-app*
+s2i build test/test-app/ lighttpd-centos7 sample-app
 ```
 14. Now it’s time to actually test the resulting image. Run the image, publishing port 8080 from the container to one on localhost:
 ```bash
