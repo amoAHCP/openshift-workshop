@@ -23,6 +23,11 @@ This workshop gives you a brief introduction of how to deploy a Java application
 - Step 5, demonstrates the usage of a custom Dockerfile together with the Fabric8 plugin
 - In Step 6 we split the application into a frontend a write and a read service
 - In Step 7 we add a second frontend and use a different approach for service discovery
+- In Step 8 and 9 we will look at config maps as a mechanism to externalize configuration.
+- In Step 10 we will use secrets to store sensitive data.
+- In Step 11 we will creat and use a template.
+- In Step 12 we will buildour own S2I builder image.
+
 
 ## Reset your installation:
 
@@ -31,6 +36,11 @@ Resetting your Openshift is easy. In most cases it is sufficient to run the foll
 - *oc delete service --all*
 - *oc delete deployment --all*
 - *oc delete pods --all*
+- *oc delete templates --all*
+- *oc delete cm --all*
+
+Dont use *oc delete secrets --all* since you might also delete secrets used by some system components
+in your project.
 
 Given Openshift a few seconds to perform all changes (the CLI will immedeately return, but the deletion process might still be ongoing).
 
@@ -38,3 +48,4 @@ If nevertheless things still fail (rarely happening) you can recreate the Opensh
 
 - *minishift delete*
 - *minishift start --memory 4096 --cpus 2*
+
