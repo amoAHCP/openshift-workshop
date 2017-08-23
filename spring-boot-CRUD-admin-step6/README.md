@@ -10,4 +10,6 @@ A simple Spring-boot 2 CRUD application with mongoDB. In Step 6 we separate the 
 4. Build and deploy the project: *mvn clean install*
 5. Get service $ROUTE-URL: *minishift openshift service list -n myproject* --> find the frontend service url
 6. Verify service: *curl $ROUTE-URL/index.html* or open open it with a browser, e.g. http://frontend-step6-myproject.192.168.99.100.nip.io/index.html
+7. Find valid ENV names: *oc get pods* --> execute: *oc exec $PODNAME env*, e.g *oc exec frontend-step6-4-8hpwc env*
+
 
