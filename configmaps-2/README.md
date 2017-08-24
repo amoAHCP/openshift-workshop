@@ -24,7 +24,7 @@ There will be 2 users of 2 projects for two different staging environments:
 
 10.Login as admin: *oc login -u system:admin*
 11.Set rules: *oc create -f roles.json*
-12. Assign rules: *oc adm policy add-role-to-user image-tagger developer -n configmap-test* and *oc adm policy add-role-to-user image-puller system:serviceaccount:configmap-test:deployer -n configmap-dev*
+12. Assign rules: *oc adm policy add-role-to-user image-tagger developer -n configmap-test*
 
 
 13. Login in back as developer: *oc -u developer -p developer*
