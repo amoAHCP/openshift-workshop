@@ -67,21 +67,16 @@
       "status": {
         "loadBalancer": {}
       }
-    },
-    {
+    },{
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata":{
-        "name": "elasticsearch",
-        "annotations":{
-          "openshift.io/image.insecureRepository": "true"
-        }
+        "name": "elasticsearch"
       },
       "spec":{
-        "dockerImageRepository": "dockerhub.com:5000/elasticsearch"
+        "dockerImageRepository": "docker.elastic.co/elasticsearch/elasticsearch"
       }
-    },
-    {
+    },{
       "kind": "DeploymentConfig",
       "apiVersion": "v1",
       "metadata": {
@@ -236,7 +231,7 @@
       "name": "ES_VERSION",
       "displayName": "Version of Elasticsearch Image",
       "description": "Version of Elasticsearch image to be used (5.5 or latest).",
-      "value": "5.5",
+      "value": "5.5.2",
       "required": true
     },
     {
