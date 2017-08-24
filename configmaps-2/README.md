@@ -6,12 +6,12 @@ A simple nodejs application showing how to define and use a config map. Every pr
 
 There will be 2 users of 2 projects for two different staging environments:
 
-- User: *dev*  Project: *configmap-dev*
+- User: *developer*  Project: *configmap-dev*
 - User: *test* Project: *configmap-test*
 
 ## Run the examples
 
-1. Login to Openshift: *oc login -u dev -p dev*
+1. Login to Openshift: *oc login -u developer -p developer*
 2. Create a new project: *oc new-project configmap-dev*
 3. *oc create -f configmap-dev.json*
 4. *oc create -f app-deployment.json*
@@ -22,13 +22,13 @@ There will be 2 users of 2 projects for two different staging environments:
 8. *oc create -f configmap-test.json*
 9. *oc create -f app-deployment.json*
 
-10.Login as admin: *oc login -u admin -p admin*
+10.Login as admin: *oc login -u system:admin*
 11.Set rules: *oc create -f roles.json*
-12. Assign rules: *oc adm policy add-role-to-user image-tagger dev -n configmap-test* and *oc adm policy add-role-to-user image-puller system:serviceaccount:configmap-test:deployer -n configmap-dev*
+12. Assign rules: *oc adm policy add-role-to-user image-tagger developer -n configmap-test* and *oc adm policy add-role-to-user image-puller system:serviceaccount:configmap-test:deployer -n configmap-dev*
 
 
-13. Login in back as developer: *oc -u dev -p dev*
-14. Build the app as developer: *oc start-build node-app -n node-app-dev --from-dir=. --follow*
+13. Login in back as developer: *oc -u developer -p developer*
+14. Build the app as developer: *oc start-build node-app -n configmap-dev --from-dir=.. --follow*
 
 
 15. Get service $ROUTE-URL: *minishift openshift service list -n configmap-dev* --> find the frontend service url
@@ -36,7 +36,7 @@ There will be 2 users of 2 projects for two different staging environments:
 
 ## How to promote the application from dev to test
 
-17. If you want to promote the application, use: *oc tag node-app-dev/node-app:latest node-app-test/node-app:latest*
+17. If you want to promote the application, use: *oc tag configmap-dev/node-app:latest configmap-test/node-app:latest*
 
 You'll see how the application get deployed into the test environment:
 
