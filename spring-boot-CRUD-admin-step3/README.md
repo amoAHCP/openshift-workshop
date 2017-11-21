@@ -13,8 +13,8 @@ A simple Spring-boot 2 CRUD application with mongoDB. Application will be build 
 7. Deploy config map: *oc create -f kube/configmap.yml*
 8. Create service: *oc create -f kube/service.yml*
 9. Build the project: *mvn clean package* 
-10. Build the docker image: *docker build -t step3 . *
-11. Tag the built docker image: docker tag step3 $(minishift openshift registry)/myproject/step3 **on Windows:** first execute *minishift openshift registry* and put the $OUTPUT to *docker tag step3 $OUTPUT/myproject/step3*
+10. Build the docker image: *docker build -t step3 .*
+11. Tag the built docker image: *docker tag step3 $(minishift openshift registry)/myproject/step3* **on Windows:** first execute *minishift openshift registry* and put the $OUTPUT to *docker tag step3 $OUTPUT/myproject/step3*
 12. Push the built image to the openshift registry: *docker push $(minishift openshift registry)/myproject/step3*
 13. Ensure the deployment.xml "image" entry matches the pushed name (*172.30.1.1:5000/myproject/step3* , check the prefix by executing **minishift openshift registry**) 
 14. Create deployment: *oc create -f kube/deployment.yml*
