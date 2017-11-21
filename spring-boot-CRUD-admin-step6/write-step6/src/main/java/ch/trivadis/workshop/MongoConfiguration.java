@@ -35,10 +35,6 @@ public class MongoConfiguration extends AbstractReactiveMongoConfiguration {
     return Jackson2ObjectMapperBuilder.json().build();
   }
 
-  @Override
-  public MongoClient mongoClient() {
-    return MongoClients.create(url);
-  }
 
   @Override
   protected String getDatabaseName() {
@@ -46,4 +42,8 @@ public class MongoConfiguration extends AbstractReactiveMongoConfiguration {
   }
 
 
+  @Override
+  public MongoClient reactiveMongoClient() {
+    return MongoClients.create(url);
+  }
 }
