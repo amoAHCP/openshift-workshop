@@ -91,15 +91,15 @@ public class FrontendController {
    * Returns the URL for the "read" application using environmental variables
    */
   private String getReadURL() {
-    return "http://" + System.getenv(readHost) + ":" + System
-        .getenv(readPort);
+    return System.getenv(readHost)!=null?"http://" + System.getenv(readHost) + ":" + System
+        .getenv(readPort):"http://"+readHost+":"+readPort;
   }
 
   /**
    * Returns the URL for the "write" application using environmental variables
    */
   private String getWriteURL() {
-    return "http://" + System.getenv(writeHost) + ":" + System
-        .getenv(writePort);
+    return System.getenv(writeHost)!=null?"http://" + System.getenv(writeHost) + ":" + System
+        .getenv(writePort):"http://"+writeHost+":"+writePort;
   }
 }
